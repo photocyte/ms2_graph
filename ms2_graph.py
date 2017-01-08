@@ -8,7 +8,6 @@ import subprocess
 import os
 import time
 import math
-import decimal
 
 import pandas
 import networkx
