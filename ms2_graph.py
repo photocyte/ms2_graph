@@ -13,9 +13,9 @@ import pandas
 import networkx
 import numpy
 
-parser = argparse.ArgumentParser(description='Convert MZMine2 MS2 similarity CSV to graphML')
+parser = argparse.ArgumentParser(description='Convert MZMine2 MS2 similarity CSV to graphML. Use the MZMine2 Identification->MS2 similarity search module to to annotate similar ions, then export all the information to CSV with Export/Import->Export CSV, with *all* the exportable options picked, including "Export all IDs for peaks".')
 
-parser.add_argument('-f', nargs='+',required=True)
+parser.add_argument('-f', nargs='+',required=True,help="MZMine2 produced CSV files")
 
 args = parser.parse_args()
 
