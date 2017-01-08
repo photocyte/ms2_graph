@@ -8,10 +8,11 @@ Python dependencies:
 * Numpy
 * Pandas 
 * NetworkX
+* Python 2.7 (not tested to work with Python 3)
 
 ## Usage
 
-Use -h or --help on the command line to for usage instructions.
+Use "python ./ms2_graph -h" or "python ./ms2_graph --help" on the command line to for usage instructions.
 
 ## Contributing
 
