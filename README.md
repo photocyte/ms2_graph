@@ -1,6 +1,6 @@
 # Project Name
 
-This script takes a .csv file with MS2 matching information from MZMine2 2.22+ (http://mzmine.github.io) MS2 similary module, and converts it into a .graphml file suitable for viewing in Cytoscape (http://www.cytoscape.org). 
+This script takes a .csv file with MS2 matching information from MZMine2 2.22+ (http://mzmine.github.io) MS2 similarity module, and converts it into a .graphml file suitable for viewing in Cytoscape (http://www.cytoscape.org). 
 
 ## Dependencies
 
