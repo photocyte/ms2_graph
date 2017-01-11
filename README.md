@@ -5,10 +5,8 @@ This script takes a .csv file with MS2 matching information from MZMine2 2.22+ (
 ## Dependencies
 
 Python dependencies:
-* Numpy
-* Pandas 
-* NetworkX
 * Python 2.7 (not tested to work with Python 3)
+* NetworkX
 
 ## Usage
 

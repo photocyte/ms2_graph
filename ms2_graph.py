@@ -2,16 +2,15 @@
 
 ##A tool that takes CSV files in the MZMine 2.2.1 format.
 
-import sys
+
 import argparse
-import subprocess
-import os
 import time
 import math
+import csv
+print "Basic imports done."
 
-import pandas
 import networkx
-import numpy
+print "NetworkX import done."
 
 parser = argparse.ArgumentParser(description='Convert MZMine2 MS2 similarity CSV to graphML. Use the MZMine2 Identification->MS2 similarity search module to to annotate similar ions, then export all the information to CSV with Export/Import->Export CSV, with *all* the exportable options picked, including "Export all IDs for peaks".')
 
@@ -66,19 +65,33 @@ class Feature:
 
 for file in args.f:
 	print "Opening file",file,"..."
-	df=pandas.read_csv(file, sep=',')
-	dataframes[file] = df
+	
+	handle = open(file,"rU")	 
+	csv_rows = csv.reader(handle,delimiter=',')
+
 	graphs[file] = networkx.Graph()
-	#print df.keys()
-	data = df.loc[(pandas.isnull(df['Name']) == False), ['row ID','row m/z','row retention time',"Name"]]
-	for row in data.itertuples():
-		id = row[1]
-		mz = row[2]
-		rt = row[3]
-		edges = row[4]
-		feature = Feature(id,mz,rt,edges)
-		if feature.edges != None:
-			graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)
+
+	i=0
+	for row in csv_rows:
+		if i == 0:
+			##Header row
+			print "CSV header is as follows:"
+			print '\t'.join(row)
+			assert row[0] == 'row ID'
+			assert row[1] == 'row m/z'
+			assert row[2] == 'row retention time'
+			assert row[7] == 'Name'
+		elif i > 0:
+			id = row[0]
+        		mz = row[1]
+        		rt = row[2]
+			print id,mz,rt
+        		edges = row[7]
+        		feature = Feature(id,mz,rt,edges)
+        		if feature.edges != None:
+				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
+		i+=1
+
 	#print graphs[file].nodes()
 	##Nodes are now setup.
 	print "Finished parsing nodes for file",file
