@@ -50,6 +50,8 @@ class Feature:
                         	self.edges[i] = {'mz':edge_mz,'rt':edge_rt,'score':edge_score,'num_ions_matched':edge_num_ions_matched,'matched_ions':edge_matched_ions}
 			elif len(items) == 6 and "MS2" in self.edges[i]:
 				##Possibly working with an older version of MZmine that doesn't include the matched ions.
+				self.edges[i] = None
+				continue
 				pass
 
 				edge_mz = float(items[2][4:])
@@ -86,7 +88,7 @@ for file in args.f:
         		mz = row[1]
         		rt = row[2]
 			print id,mz,rt
-        		edges = row[7]
+        		edges = row[3]
         		feature = Feature(id,mz,rt,edges)
         		if feature.edges != None:
 				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
