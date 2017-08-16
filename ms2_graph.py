@@ -1,6 +1,6 @@
 #! /usr/bin/python
 
-##A tool that takes CSV files in the MZMine 2.2.1 format.
+##A tool that takes CSV files in the MZMine 2.28 format.
 
 
 import argparse
@@ -80,7 +80,7 @@ for file in args.f:
 			assert row[0] == 'row ID'
 			assert row[1] == 'row m/z'
 			assert row[2] == 'row retention time'
-			assert row[7] == 'Name'
+			assert row[3] == 'row identity'
 		elif i > 0:
 			id = row[0]
         		mz = row[1]
