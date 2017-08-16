@@ -2,15 +2,10 @@
 
 ##A tool that takes CSV files in the MZMine 2.2.1 format.
 
-##Standard imports
-import sys
+
 import argparse
 import time
 import math
-import re
-
-##Non standard imports
-import pandas
 import csv
 print "Basic imports done."
 
@@ -43,7 +38,7 @@ class Feature:
 				self.edges[i] = None
 				continue
 			elif len(items) == 7 and "MS2" in self.edges[i]:
-				print "Have expected number of items."
+				##print "Have expected number of items."
 	                        edge_mz = float(items[2][4:])
         	                s = items[3].find("RT:") + len("RT:")
                 	        edge_rt = float(items[3][s:])
@@ -53,10 +48,8 @@ class Feature:
                         	s = items[6].find("chedIons:") + len("chedIons:")
                         	edge_matched_ions = items[6][s:].split("_")
                         	self.edges[i] = {'mz':edge_mz,'rt':edge_rt,'score':edge_score,'num_ions_matched':edge_num_ions_matched,'matched_ions':edge_matched_ions}
-			
 			elif len(items) == 6 and "MS2" in self.edges[i]:
-				print "Possibly working with an older version of MZmine that doesn't include the matched ions."
-				print items
+				##Possibly working with an older version of MZmine that doesn't include the matched ions.
 				pass
 
 				edge_mz = float(items[2][4:])
@@ -77,16 +70,6 @@ for file in args.f:
 	csv_rows = csv.reader(handle,delimiter=',')
 
 	graphs[file] = networkx.Graph()
-	#print df.keys()
-	data = df.loc[(pandas.isnull(df['row identity']) == False), ['row ID','row m/z','row retention time',"row identity"]]
-	for row in data.itertuples():
-		id = row[1]
-		mz = row[2]
-		rt = row[3]
-		edges = row[4]
-		feature = Feature(id,mz,rt,edges)
-		if feature.edges != None:
-			graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)
 
 	i=0
 	for row in csv_rows:
