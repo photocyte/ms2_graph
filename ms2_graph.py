@@ -37,6 +37,13 @@ class Feature:
 				print items,len(self.edges)
 				self.edges[i] = None
 				continue
+
+			elif len(items) > 7:
+				print "WARNING! too many items in identity:",
+				print items,len(self.edges)
+				self.edges[i] = None
+				continue
+
 			elif len(items) == 7 and "MS2" in self.edges[i]:
 				##print "Have expected number of items."
 	                        edge_mz = float(items[2][4:])
@@ -52,15 +59,13 @@ class Feature:
 				##Possibly working with an older version of MZmine that doesn't include the matched ions.
 				self.edges[i] = None
 				continue
-				pass
 
-				edge_mz = float(items[2][4:])
-				s = items[3].find("RT:") + len("RT:")
-				edge_rt = float(items[3][s:])
-				edge_score = float(items[4][7:])
-				edge_num_ions_matched = int(items[5][15:])
-				self.edges[i] = {'mz':edge_mz,'rt':edge_rt,'score':edge_score,'num_ions_matched':edge_num_ions_matched}
-
+				#edge_mz = float(items[2][4:])
+				#s = items[3].find("RT:") + len("RT:")
+				#edge_rt = float(items[3][s:])
+				#edge_score = float(items[4][7:])
+				#edge_num_ions_matched = int(items[5][15:])
+				#self.edges[i] = {'mz':edge_mz,'rt':edge_rt,'score':edge_score,'num_ions_matched':edge_num_ions_matched}
 	def get_label(self):
 		return "ID:"+str(self.id)+" mz:"+str(round(self.mz,4))+" rt:"+str(round(self.rt,1))
 		
