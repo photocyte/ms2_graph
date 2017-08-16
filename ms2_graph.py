@@ -2,25 +2,18 @@
 
 ##A tool that takes CSV files in the MZMine 2.2.1 format.
 
-<<<<<<< HEAD
 ##Standard imports
 import sys
-=======
-
->>>>>>> 808f77183824c8089989f70808c453039561c549
 import argparse
 import time
 import math
-<<<<<<< HEAD
 import re
 
 ##Non standard imports
 import pandas
-=======
 import csv
 print "Basic imports done."
 
->>>>>>> 808f77183824c8089989f70808c453039561c549
 import networkx
 print "NetworkX import done."
 
@@ -84,7 +77,6 @@ for file in args.f:
 	csv_rows = csv.reader(handle,delimiter=',')
 
 	graphs[file] = networkx.Graph()
-<<<<<<< HEAD
 	#print df.keys()
 	data = df.loc[(pandas.isnull(df['row identity']) == False), ['row ID','row m/z','row retention time',"row identity"]]
 	for row in data.itertuples():
@@ -95,7 +87,6 @@ for file in args.f:
 		feature = Feature(id,mz,rt,edges)
 		if feature.edges != None:
 			graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)
-=======
 
 	i=0
 	for row in csv_rows:
@@ -118,7 +109,6 @@ for file in args.f:
 				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
 		i+=1
 
->>>>>>> 808f77183824c8089989f70808c453039561c549
 	#print graphs[file].nodes()
 	##Nodes are now setup.
 	print "Finished parsing nodes for file",file
