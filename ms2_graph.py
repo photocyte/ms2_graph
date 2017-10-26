@@ -69,7 +69,6 @@ class Feature:
 	def get_label(self):
 		return "ID:"+str(self.id)+" mz:"+str(round(self.mz,4))+" rt:"+str(round(self.rt,1))
 		
-
 for file in args.f:
 	print "Opening file",file,"..."
 	
@@ -83,17 +82,21 @@ for file in args.f:
 		if i == 0:
 			##Header row
 			print "CSV header is as follows:"
-			print '\t'.join(row)
-			assert row[0] == 'row ID'
-			assert row[1] == 'row m/z'
-			assert row[2] == 'row retention time'
-			assert row[4] == 'row identity (all IDs)'
+			print row
+			assert 'row ID' in row
+			assert 'row m/z' in row
+			assert 'row retention time' in row
+			assert 'row identity (all IDs)' in row
+			row_id_index = row.index('row ID')
+			row_mz_index = row.index('row m/z')
+			row_rt_index = row.index('row retention time')
+			row_ident_index = row.index('row identity (all IDs)')
 		elif i > 0:
-			id = row[0]
-        		mz = row[1]
-        		rt = row[2]
+			id = row[row_id_index]
+        		mz = row[row_mz_index]
+        		rt = row[row_rt_index]
 			print id,mz,rt
-        		edges = row[4]
+        		edges = row[row_ident_index]
         		feature = Feature(id,mz,rt,edges)
         		if feature.edges != None:
 				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
