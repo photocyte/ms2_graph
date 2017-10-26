@@ -21,7 +21,7 @@ print "NetworkX import done."
 
 parser = argparse.ArgumentParser(description='Convert MZMine2 MS2 similarity CSV to graphML. Use the MZMine2 Identification->MS2 similarity search module to to annotate similar ions, then export all the information to CSV with Export/Import->Export CSV, with *all* the exportable options picked, including "Export all IDs for peaks".')
 
-parser.add_argument('-f', nargs='+',required=True,help="MZMine2 produced CSV files")
+parser.add_argument('-f',metavar="CSVFILE", nargs='+',required=True,help="MZMine2 produced CSV files")
 
 args = parser.parse_args()
 
@@ -39,7 +39,7 @@ class Feature:
 			items = self.edges[i].split(" ")
 			
 			##Figure out how to parse the edges...
-			if len(items) <= 5 or "MS2" not in self.edges[i]:
+			if len(items) <= 5 or "MS2 similarity" not in self.edges[i]:
 				print "WARNING! not enough items in identity:",
 				print items,len(self.edges)
 				self.edges[i] = None
@@ -51,7 +51,7 @@ class Feature:
 				self.edges[i] = None
 				continue
 
-			elif len(items) == 7 and "MS2" in self.edges[i]:
+			elif len(items) == 7 and "MS2 similarity" in self.edges[i]:
 				##print "Have expected number of items."
 	                        edge_mz = float(items[2][4:])
         	                s = items[3].find("RT:") + len("RT:")
