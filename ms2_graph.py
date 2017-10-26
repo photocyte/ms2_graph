@@ -9,6 +9,7 @@
 ##
 ##Ideally, we could figure out from the CSV which case happened (search against own peaklist, versus seach against 2 peaklists), and have a switch to use the two modes
 ##But, I believe there isn't any information in the CSV (currently) which could tell you if the same versus different peaklists were searched.
+##And currently the similarity search module doesn't export the ID of the matched scan.
 
 import argparse
 import time
@@ -22,6 +23,8 @@ print "NetworkX import done."
 parser = argparse.ArgumentParser(description='Convert MZMine2 MS2 similarity CSV to graphML. Use the MZMine2 Identification->MS2 similarity search module to to annotate similar ions, then export all the information to CSV with Export/Import->Export CSV, with *all* the exportable options picked, including "Export all IDs for peaks".')
 
 parser.add_argument('-f',metavar="CSVFILE", nargs='+',required=True,help="MZMine2 produced CSV files")
+#parser.add_argument('--mz_diff_limit',metavar="0.00015",help="MZMine2 produced CSV files")
+#parser.add_argument('--rt_diff_limit',metavar="0.00015",help="MZMine2 produced CSV files")
 
 args = parser.parse_args()
 
