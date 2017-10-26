@@ -1,7 +1,14 @@
 #! /usr/bin/python
 
-##A tool that takes CSV files in the MZMine 2.28 format.
+##A tool that takes CSV files in the MZMine 2.29 format, and converts it to a graphML with the MS2 similarity in said graph
 
+##TODO, right now the script uses similarity in the RT and m/z to match the MS2 similarity "edge", between the right nodes 
+##If a single file/peaklist was searched against itself, then we can simply lookup the feature ID, and save a lot of trouble and potential error?
+##If multiple peaklists were searched (e.g. A against B), then we can't rely on the feature ID for lookup, as there may be collisions, 
+##and situations like where feature X has an id to match against, but feature id(from A) is present, when we intended feature id(from B), 
+##
+##Ideally, we could figure out from the CSV which case happened (search against own peaklist, versus seach against 2 peaklists), and have a switch to use the two modes
+##But, I believe there isn't any information in the CSV (currently) which could tell you if the same versus different peaklists were searched.
 
 import argparse
 import time
@@ -76,6 +83,8 @@ for file in args.f:
 	csv_rows = csv.reader(handle,delimiter=',')
 
 	graphs[file] = networkx.Graph()
+	feature_ids = set()
+	feature_ids_with_collisions = set()
 
 	i=0
 	for row in csv_rows:
@@ -97,6 +106,10 @@ for file in args.f:
         		rt = row[row_rt_index]
 			print id,mz,rt
         		edges = row[row_ident_index]
+			if id in feature_ids:
+				feature_ids_with_collisions.add(id)
+			else:
+				feature_ids.add(id)
         		feature = Feature(id,mz,rt,edges)
         		if feature.edges != None:
 				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
@@ -106,6 +119,7 @@ for file in args.f:
 	##Nodes are now setup.
 	print "Finished parsing nodes for file",file
 	print len(graphs[file]),"nodes parsed."
+	print "There were",len(feature_ids_with_collisions),"feature id collisions."
 	print "Converting CSV 'edges' to actual NetworkX graph edges"
 	print "This could take awhile..."
 
