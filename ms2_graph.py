@@ -87,13 +87,13 @@ for file in args.f:
 			assert row[0] == 'row ID'
 			assert row[1] == 'row m/z'
 			assert row[2] == 'row retention time'
-			assert row[3] == 'row identity'
+			assert row[4] == 'row identity (all IDs)'
 		elif i > 0:
 			id = row[0]
         		mz = row[1]
         		rt = row[2]
 			print id,mz,rt
-        		edges = row[3]
+        		edges = row[4]
         		feature = Feature(id,mz,rt,edges)
         		if feature.edges != None:
 				graphs[file].add_node(feature,name=feature.get_label(),mz=feature.mz,rt=feature.rt)	
