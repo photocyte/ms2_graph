@@ -42,30 +42,30 @@ class Feature:
 			items = self.edges[i].split(" ")
 			
 			##Figure out how to parse the edges...
-			if len(items) <= 5 or "MS2 similarity" not in self.edges[i]:
+			if len(items) <= 5 or "MS2similarity" not in self.edges[i]:
 				print "WARNING! not enough items in identity:",
-				print items,len(self.edges)
+				print items,len(items)
 				self.edges[i] = None
 				continue
 
 			elif len(items) > 7:
 				print "WARNING! too many items in identity:",
-				print items,len(self.edges)
+				print items,len(items)
 				self.edges[i] = None
 				continue
 
-			elif len(items) == 7 and "MS2 similarity" in self.edges[i]:
+			elif len(items) == 6 and "MS2similarity" in self.edges[i]:
 				##print "Have expected number of items."
-	                        edge_mz = float(items[2][4:])
-        	                s = items[3].find("RT:") + len("RT:")
-                	        edge_rt = float(items[3][s:])
-                       		edge_score = float(items[4][7:])
-                        	edge_num_ions_matched = int(items[5][15:])
+	                        edge_mz = float(items[1][4:])
+        	                s = items[2].find("RT:") + len("RT:")
+                	        edge_rt = float(items[2][s:])
+                       		edge_score = float(items[3][7:])
+                        	edge_num_ions_matched = int(items[4][15:])
 
-                        	s = items[6].find("chedIons:") + len("chedIons:")
-                        	edge_matched_ions = items[6][s:].split("_")
+                        	s = items[5].find("chedIons:") + len("chedIons:")
+                        	edge_matched_ions = items[5][s:].split("_")
                         	self.edges[i] = {'mz':edge_mz,'rt':edge_rt,'score':edge_score,'num_ions_matched':edge_num_ions_matched,'matched_ions':edge_matched_ions}
-			elif len(items) == 6 and "MS2" in self.edges[i]:
+			elif len(items) == 5 and "MS2" in self.edges[i]:
 				##Possibly working with an older version of MZmine that doesn't include the matched ions.
 				self.edges[i] = None
 				continue
